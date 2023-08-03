@@ -1,0 +1,27 @@
+<div
+  class="bg-gray-50 rounded w-[60vw] md:w-[20vw] z-[99] fixed top-[30%] left-[20vw] md:left-[40vw]"
+>
+  <div class="bg-green-500 flex justify-evenly w-full text-center p-5">
+    <h3
+      class="text-3xl text-green-500 inline font-bold bg-yellow-300 py-2 px-5 rounded-2xl"
+    >
+      Success
+    </h3>
+    <span class="mt-2">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        fill="currentColor"
+        class="h-10 w-10 text-gray-50 font-extrabold"
+        viewBox="0 0 16 16"
+      >
+        <path
+          d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"
+        />
+      </svg>
+    </span>
+  </div>
+  <div class="mb-2 bg-gray-50 p-2 text-center text-xl font-semibold">
+    {{ message$ | async }}
+  </div>
+</div>
+<div class="fixed top-0 left-0 h-screen w-screen bg-black opacity-40"></div>

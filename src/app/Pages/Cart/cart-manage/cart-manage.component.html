@@ -1,0 +1,95 @@
+<div *ngIf="(cartItems$ | async)?.length" class="container mx-auto mt-12 p-10">
+  <h1 class="text-3xl md:text-4xl font-bold mb-8">Your Cart</h1>
+
+  <div class="overflow-x-auto">
+    <table class="w-full bg-white shadow-md rounded-lg">
+      <thead class="bg-gray-200">
+        <tr>
+          <th class="py-4 px-6 text-left font-semibold">Product</th>
+          <th class="py-4 px-6 text-left font-semibold">title</th>
+          <th class="py-4 px-6 text-center font-semibold">Price</th>
+          <th class="py-4 px-6 text-center font-semibold">Quantity</th>
+          <th class="py-4 px-6 text-center font-semibold">Total</th>
+          <th class="py-4 px-6 text-center font-semibold">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Cart Item 1 -->
+        <tr *ngFor="let item of cartItems$ | async">
+          <td class="py-4 px-6 border-b border-gray-200">
+            <img [src]="item.image" class="h-16" alt="" />
+          </td>
+          <td class="py-4 px-6 border-b border-gray-200">
+            {{ item.title | summary }}
+          </td>
+          <td class="py-4 px-6 text-center border-b border-gray-200">
+            {{ item.price | localCurrency | currency : "INR" }}
+          </td>
+
+          <td class="py-4 px-6 text-center border-b border-gray-200">
+            <div class="flex">
+              <button
+                type="button"
+                (click)="decrementQuantity(item)"
+                class="px-3 py-2 bg-blue-500 text-white rounded-l-md hover:bg-blue-600 focus:outline-none"
+              >
+                -
+              </button>
+
+              <input
+                disabled
+                id="quantity"
+                [value]="item.count"
+                class="w-16 px-3 py-2 border border-gray-300 focus:outline-none focus:ring focus:border-blue-300 text-center"
+              />
+
+              <button
+                class="px-3 py-2 bg-red-500 text-white rounded-r-md hover:bg-red-600 focus:outline-none"
+                type="button"
+                (click)="incrementQuantity(item)"
+              >
+                +
+              </button>
+            </div>
+            <!-- <input type="number" class="w-16 px-2 py-1 border rounded-md"> -->
+            <!-- <input type="number" id="quantity" class="w-16 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:border-blue-300"> -->
+          </td>
+          <td class="py-4 px-6 text-center border-b border-gray-200">
+            {{
+              calculateTotal(item.price, item.count)
+                | localCurrency
+                | currency : "INR"
+            }}
+          </td>
+          <td class="py-4 px-6 text-center border-b border-gray-200">
+            <button
+              (click)="removeItem(item)"
+              class="px-4 py-2 bg-red-600 text-white font-semibold rounded-full hover:bg-red-700"
+            >
+              Remove
+            </button>
+          </td>
+        </tr>
+        <!-- Add more cart items here -->
+      </tbody>
+    </table>
+  </div>
+
+  <div class="mt-8 text-right">
+    <p class="text-xl font-semibold">
+      Total: {{ totalPrice$ | async | localCurrency | currency : "INR" }}
+    </p>
+    <button
+      (click)="checkout()"
+      class="mt-4 px-6 py-3 text-lg font-semibold bg-green-600 text-white rounded-full hover:bg-green-700"
+    >
+      Checkout
+    </button>
+  </div>
+</div>
+<div
+  *ngIf="(cartItems$ | async)?.length === 0"
+  class="w-screen h-screen grid place-items-center text-3xl font-bold"
+>
+  Your Cart is Empty
+</div>
